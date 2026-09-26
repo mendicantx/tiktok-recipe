@@ -1,3 +1,10 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#c2552d"/>
+  <g fill="none" stroke="#faf7f2" stroke-width="24" stroke-linecap="round">
+    <path d="M196 212c-26-26 26-50 0-86"/>
+    <path d="M256 212c-26-26 26-50 0-86"/>
+    <path d="M316 212c-26-26 26-50 0-86"/>
+  </g>
+  <path d="M104 256h304a152 152 0 0 1-304 0z" fill="#faf7f2"/>
+  <rect x="196" y="398" width="120" height="26" rx="13" fill="#faf7f2"/>
 </svg>
