@@ -52,6 +52,8 @@ group :development do
   gem "capistrano-bundler", require: false
   gem "capistrano-asdf", require: false
   gem "fiddle", require: false # net-ssh's Windows agent support; no longer a default gem in Ruby 4.0
+  gem "ed25519", require: false      # net-ssh: needed to read OpenSSH-format key files (even RSA)
+  gem "bcrypt_pbkdf", require: false # net-ssh: same
 end
 
 group :test do
