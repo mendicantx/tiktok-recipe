@@ -1,0 +1,77 @@
+<% content_for :title, @recipe.title %>
+
+<h1 class="mb-6 font-serif text-3xl font-semibold leading-tight md:text-4xl"><%= @recipe.title %></h1>
+
+<article class="grid gap-8 md:grid-cols-[2fr_3fr]">
+  <div>
+    <% if @recipe.cover.attached? %>
+      <%= image_tag @recipe.cover, alt: @recipe.title, class: "aspect-[4/3] w-full rounded-lg border border-line object-cover shadow-sm md:aspect-auto" %>
+    <% end %>
+
+    <dl class="mt-4 space-y-1 text-sm">
+      <% { "Servings" => @recipe.servings, "Total time" => @recipe.total_time }.compact_blank.each do |label, value| %>
+        <div class="flex gap-2"><dt class="text-muted"><%= label %>:</dt><dd><%= value %></dd></div>
+      <% end %>
+      <% if @recipe.creator.present? %>
+        <div class="flex gap-2"><dt class="text-muted">From:</dt><dd>@<%= @recipe.creator %></dd></div>
+      <% end %>
+      <% if @recipe.source_url.present? %>
+        <div class="flex gap-2"><dt class="text-muted">Source:</dt><dd><%= link_to "Original video ↗", @recipe.source_url, class: "text-accent underline", target: "_blank", rel: "noopener" %></dd></div>
+      <% end %>
+    </dl>
+  </div>
+
+  <div>
+    <section>
+      <h2 class="label">Ingredients</h2>
+      <ul class="divide-y divide-line rounded-lg border border-line bg-white">
+        <% @recipe.ingredients.each do |ing| %>
+          <li class="flex gap-3 px-4 py-2 text-sm">
+            <span class="w-24 shrink-0 font-medium tabular-nums <%= "italic text-muted" if ing.estimated? %>">
+              <%= ing.amount.presence || "—" %><%= "*" if ing.estimated? %>
+            </span>
+            <span><%= ing.item %><% if ing.note.present? %><span class="text-muted">, <%= ing.note %></span><% end %></span>
+          </li>
+        <% end %>
+      </ul>
+      <% if @recipe.estimated_quantities? %>
+        <p class="mt-2 text-xs text-muted">* Quantity not stated in the video. Use your judgment.</p>
+      <% end %>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="label">Steps</h2>
+      <ol class="space-y-4">
+        <% @recipe.steps.each do |step| %>
+          <li class="flex gap-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-semibold text-white"><%= step.position %></span>
+            <p class="pt-0.5 leading-relaxed"><%= step.body %></p>
+          </li>
+        <% end %>
+      </ol>
+    </section>
+
+    <% if @recipe.notes.present? %>
+      <section class="mt-8">
+        <h2 class="label">Notes</h2>
+        <ul class="list-disc space-y-1 pl-5 text-sm text-muted">
+          <% @recipe.notes.each do |note| %><li><%= note %></li><% end %>
+        </ul>
+      </section>
+    <% end %>
+
+    <% if @recipe.transcript.present? || @recipe.caption.present? %>
+      <details class="mt-8 rounded-lg border border-line bg-white p-4 text-sm">
+        <summary class="cursor-pointer font-medium text-muted">Original transcript & caption</summary>
+        <% if @recipe.transcript.present? %>
+          <h3 class="label mt-4">Transcript</h3>
+          <p class="whitespace-pre-line leading-relaxed"><%= @recipe.transcript %></p>
+        <% end %>
+        <% if @recipe.caption.present? %>
+          <h3 class="label mt-4">Caption</h3>
+          <p class="whitespace-pre-line leading-relaxed"><%= @recipe.caption %></p>
+        <% end %>
+      </details>
+    <% end %>
+  </div>
+</article>

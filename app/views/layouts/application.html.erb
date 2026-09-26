@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Recipe Box" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="min-h-screen bg-paper text-ink antialiased">
+    <header class="border-b border-line bg-white/70">
+      <div class="mx-auto max-w-5xl px-4 py-3">
+        <%= link_to "Recipe Box", root_path, class: "font-serif text-xl font-semibold tracking-tight" %>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-4 py-8">
+      <% if notice %>
+        <p class="mb-6 rounded-md border border-green-200 bg-green-50 px-4 py-2 text-sm text-green-800"><%= notice %></p>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

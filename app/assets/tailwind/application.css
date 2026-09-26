@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #faf7f2;
+  --color-ink: #2b2622;
+  --color-muted: #7a7068;
+  --color-line: #e7e0d6;
+  --color-accent: #c2552d;
+  --color-accent-dark: #9e4222;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+/* Tailwind v4: classes used with @apply must be declared via @utility */
+@utility btn {
+  @apply inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors;
+}
+
+@utility btn-primary {
+  @apply btn bg-accent text-white hover:bg-accent-dark;
+}
+
+@utility btn-quiet {
+  @apply btn border border-line text-ink hover:bg-line/50;
+}
+
+@utility field {
+  @apply w-full rounded-md border border-line bg-white px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent;
+}
+
+@utility label {
+  @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted;
+}
