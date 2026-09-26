@@ -32,6 +32,26 @@ class RecipesFlowTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", "/recipes/new", count: 0
   end
 
+  test "pages carry link-preview tags with a directly fetchable cover image" do
+    recipe = create_recipe("Soup")
+    recipe.cover.attach(fixture_file_upload("cover.jpg", "image/jpeg"))
+
+    get recipe_path(recipe)
+    assert_select "meta[property='og:title'][content='Soup']"
+    assert_select "meta[property='og:description'][content*='From @cook']"
+    assert_select "meta[name='twitter:card'][content='summary_large_image']"
+    image_url = css_select("meta[property='og:image']").first["content"]
+    assert_match %r{\Ahttp://www\.example\.com/rails/active_storage/}, image_url
+
+    get image_url
+    assert_response :success, "og:image must serve the file itself, not a redirect"
+    assert_equal "image/jpeg", response.media_type
+
+    get root_path
+    assert_select "meta[property='og:title'][content='Recipe Box']"
+    assert_select "meta[property='og:image']", count: 1
+  end
+
   test "the site is read-only: new, create, edit, update and delete are not routable" do
     recipe = create_recipe("Soup")
 

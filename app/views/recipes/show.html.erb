@@ -1,4 +1,5 @@
 <% content_for :title, @recipe.title %>
+<% content_for :social, social_meta_tags(title: @recipe.title, description: recipe_summary(@recipe), image: @recipe.cover) %>
 
 <h1 class="mb-6 font-serif text-3xl font-semibold leading-tight md:text-4xl"><%= @recipe.title %></h1>
 
